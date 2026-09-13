@@ -11,6 +11,29 @@
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <title>دفتر زندگی</title>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSy" + "D" + "q0b9" + "w1240480",
+      authDomain: "my-app-backup-9e7d0.firebaseapp.com",
+      projectId: "my-app-backup-9e7d0",
+      storageBucket: "my-app-backup-9e7d0.appspot.com",
+      messagingSenderId: "542844358152",
+      appId: "1:542844358152:web:e818ff7ef15381a9628bbd"
+    };
+    
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -1059,6 +1082,76 @@ function updateHeader(){const n=new Date();const both=formatBoth(n.getFullYear()
 
 load();updateHeader();renderCalendar();updateStreakUI();renderDailyQuote();showPage('home');
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});});}
+  // --- Firebase Auth & Cloud Sync Functions ---
+let currentUser = null;
+
+auth.onAuthStateChanged((user) => {
+  currentUser = user;
+  if (user) {
+    console.log("Logged in as:", user.displayName || user.email);
+  } else {
+    console.log("No user logged in.");
+  }
+});
+
+async function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  try {
+    const result = await auth.signInWithPopup(provider);
+    alert("با موفقیت وارد شدید: " + (result.user.displayName || result.user.email));
+    return result.user;
+  } catch (error) {
+    console.error("Login Error:", error);
+    alert("خطا در ورود: " + error.message);
+  }
+}
+
+async function logoutUser() {
+  try {
+    await auth.signOut();
+    alert("از حساب کاربری خارج شدید.");
+  } catch (error) {
+    console.error("Logout Error:", error);
+  }
+}
+
+async function saveToCloud(dataKey, dataValue) {
+  if (!currentUser) {
+    alert("لطفاً ابتدا با حساب گوگل وارد شوید!");
+    return;
+  }
+  try {
+    await db.collection("users").doc(currentUser.uid).set({
+      [dataKey]: dataValue,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+    alert("پشتیبان‌گیری در فضای ابری با موفقیت انجام شد ✅");
+  } catch (error) {
+    console.error("Save Cloud Error:", error);
+    alert("خطا در ذخیره ابری: " + error.message);
+  }
+}
+
+async function loadDataFromCloud(dataKey) {
+  if (!currentUser) {
+    alert("لطفاً ابتدا با حساب گوگل وارد شوید!");
+    return null;
+  }
+  try {
+    const doc = await db.collection("users").doc(currentUser.uid).get();
+    if (doc.exists && doc.data()[dataKey]) {
+      alert("داده‌ها با موفقیت از ابر دریافت شدند 📥");
+      return doc.data()[dataKey];
+    } else {
+      alert("هیچ داده‌ای در فضای ابری یافت نشد.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Load Cloud Error:", error);
+    alert("خطا در بازیابی از فضای ابری: " + error.message);
+    return null;
+  }
+}
 </script>
 </body>
 </html>
