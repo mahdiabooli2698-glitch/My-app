@@ -344,6 +344,14 @@
         <h2 class="font-bold text-lg">تنظیمات</h2>
         <div></div>
       </div>
+      <!-- بخش مدیریت ابری فایربیس -->
+<div class="mt-4 p-4 border rounded bg-gray-50">
+    <h3 class="font-bold mb-3 text-sm text-gray-700">مدیریت داده‌ها و حساب کاربری</h3>
+    <button onclick="loginWithGoogle()" class="w-full mb-2 bg-blue-600 text-white text-sm py-2 rounded-lg shadow-sm">ورود با گوگل</button>
+    <button onclick="saveToCloud()" class="w-full mb-2 bg-green-600 text-white text-sm py-2 rounded-lg shadow-sm">ذخیره در ابر (بک‌آپ)</button>
+    <button onclick="loadDataFromCloud()" class="w-full mb-2 bg-orange-500 text-white text-sm py-2 rounded-lg shadow-sm">بازیابی از ابر</button>
+    <button onclick="logoutUser()" class="w-full bg-red-500 text-white text-sm py-2 rounded-lg shadow-sm">خروج از حساب</button>
+</div>
       <div class="card p-4 space-y-3">
         <div class="font-medium">👤 پروفایل</div>
         <div><label class="text-xs text-slate-500">نام</label><input type="text" id="profile-name" class="w-full border rounded-lg p-2 text-sm mt-1" /></div>
