@@ -1105,14 +1105,14 @@ auth.onAuthStateChanged((user) => {
 async function loginWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   try {
-    const result = await auth.signInWithPopup(provider);
-    alert("با موفقیت وارد شدید: " + (result.user.displayName || result.user.email));
-    return result.user;
+    // تغییر از Popup به Redirect برای سازگاری با موبایل
+    await auth.signInWithRedirect(provider);
   } catch (error) {
     console.error("Login Error:", error);
     alert("خطا در ورود: " + error.message);
   }
 }
+
 
 async function logoutUser() {
   try {
