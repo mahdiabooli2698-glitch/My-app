@@ -1188,29 +1188,6 @@ function saveToCloud() {
 
 این تابع‌ها کار ورود، خروج و ذخیره‌سازی ابری را انجام می‌دهند:
 ```javascript
-// توابع مدیریت ابری
-function loginWithGoogle() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).then(() => {
-alert("با موفقیت وارد شدید! ✅");
-location.reload();
-  }).catch(error => alert("خطا در ورود: " + error.message));
-}
-
-function logoutUser() {
-  auth.signOut().then(() => {
-alert("خروج انجام شد");
-location.reload();
-  });
-}
-
-function saveToCloud() {
-  const user = auth.currentUser;
-  ifکمه سبز رنگ **Commit changes** را بزنید.
-
-حالا وب‌اپلیکیشن شما دیگر فقط یک «ظاهر» نیست، بلکه به مغزِ فایربیس متصل می‌شود. بعد از انجام این کار، حتماً یک بار صفحه سایت را رفرش کنید و روی «ورود با گوگل» در تنظیمات کلیک کنید تا مطمئن شوید همه چیز درست کار می‌کند.
-
-آیا موفق شدید کد را پیست و ذخیره کنید؟
 </script>
 </body>
 </html>
