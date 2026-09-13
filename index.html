@@ -1160,6 +1160,57 @@ async function loadDataFromCloud(dataKey) {
     return null;
   }
 }
+  // توابع مدیریت ابری
+function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).then(() => {
+    alert("با موفقیت وارد شدید! ✅");
+    location.reload();
+  }).catch(error => alert("خطا در ورود: " + error.message));
+}
+
+function logoutUser() {
+  auth.signOut().then(() => {
+    alert("خروج انجام شد");
+    location.reload();
+  });
+}
+
+function saveToCloud() {
+  const user = auth.currentUser;
+  ifخیالتان کاملاً راحت باشد، هیچ زحمتی هدر نرفته است. **کد شما کاملاً سالم و دست‌نخورده است.**
+
+من کد HTML شما را با دقت خواندم. دلیل اینکه در جستجو چیزی پیدا نمی‌شد این است: **شما دکمه‌های ابری را به ظاهرِ سایت اضافه کرده‌اید، اما هنوز خودِ «دستورالعمل‌ها» یا همان توابعِ (Functions) جاوااسکریپت را ننوشته‌اید.** به همین دلیل وقتی مرورگر دنبال `saveToCloud` گشت، چیزی پیدا نکرد چون اصلاً نوشته نشده بود!
+
+این اصلاً جای نگرانی ندارد. این کدها را باید به انتهای بخش `<script>` خود (قبل از تگِ `</script>` آخر) اضافه کنید.
+
+### این کدها را به انتهایِ تگ `<script>` خود اضافه کنید:
+
+این تابع‌ها کار ورود، خروج و ذخیره‌سازی ابری را انجام می‌دهند:
+```javascript
+// توابع مدیریت ابری
+function loginWithGoogle() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).then(() => {
+alert("با موفقیت وارد شدید! ✅");
+location.reload();
+  }).catch(error => alert("خطا در ورود: " + error.message));
+}
+
+function logoutUser() {
+  auth.signOut().then(() => {
+alert("خروج انجام شد");
+location.reload();
+  });
+}
+
+function saveToCloud() {
+  const user = auth.currentUser;
+  ifکمه سبز رنگ **Commit changes** را بزنید.
+
+حالا وب‌اپلیکیشن شما دیگر فقط یک «ظاهر» نیست، بلکه به مغزِ فایربیس متصل می‌شود. بعد از انجام این کار، حتماً یک بار صفحه سایت را رفرش کنید و روی «ورود با گوگل» در تنظیمات کلیک کنید تا مطمئن شوید همه چیز درست کار می‌کند.
+
+آیا موفق شدید کد را پیست و ذخیره کنید؟
 </script>
 </body>
 </html>
